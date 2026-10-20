@@ -14,6 +14,9 @@ import type { RoomView } from '@/lib/types'
 
 const STATE = 'room:state'
 
+// Optional tip-jar link on the end screen. Inlined at build time; unset means no link.
+const SUPPORT_URL = process.env.NEXT_PUBLIC_SUPPORT_URL
+
 export function RoomScreen({ code }: { code: string }) {
   const router = useRouter()
   const [view, setView] = useState<RoomView | null>(null)
@@ -373,6 +376,20 @@ function Finished({ view, onRestart }: { view: RoomView; onRestart: () => void }
             Deal again
           </button>
         </div>
+      )}
+
+      {SUPPORT_URL && (
+        <p className="mt-6 text-center text-xs font-semibold text-muted">
+          Enjoyed the game?{' '}
+          <a
+            href={SUPPORT_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="underline-offset-2 transition hover:text-ink hover:underline"
+          >
+            Buy the host a coffee
+          </a>
+        </p>
       )}
     </>
   )

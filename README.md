@@ -46,7 +46,7 @@ npm install
 npm run dev
 ```
 
-The server prints a local URL and a network URL. **Share the network one**: this is an in-person game played on phones, so the server binds to all interfaces by default. Override with `HOST` and `PORT`.
+The server prints a local URL and a network URL. **Share the network one**: this is an in-person game played on phones, so the server binds to all interfaces by default. Override with `HOST` and `PORT`. Set `NEXT_PUBLIC_SUPPORT_URL` at build time to a tip-jar page (Ko-fi, GitHub Sponsors) and the end-of-game screen shows a "Buy the host a coffee" link; leave it unset and nothing shows.
 
 | Script              | What it does                                              |
 | ------------------- | --------------------------------------------------------- |
