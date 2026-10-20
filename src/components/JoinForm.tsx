@@ -17,13 +17,14 @@ interface Props {
   error: string | null
 }
 
-// Each letter of "Guess" is a different game piece, like a box-lid logo.
+// Each letter of "Numino" is a different game piece, like a box-lid logo.
 const TITLE = [
-  { letter: 'G', className: 'text-orange -rotate-6' },
+  { letter: 'N', className: 'text-orange -rotate-6' },
   { letter: 'u', className: 'text-blue rotate-3' },
-  { letter: 'e', className: 'text-green -rotate-2' },
-  { letter: 's', className: 'text-berry rotate-6' },
-  { letter: 's', className: 'text-yellow -rotate-3' },
+  { letter: 'm', className: 'text-green -rotate-2' },
+  { letter: 'i', className: 'text-berry rotate-6' },
+  { letter: 'n', className: 'text-yellow -rotate-3' },
+  { letter: 'o', className: 'text-blue rotate-2' },
 ]
 
 export function JoinForm({
@@ -54,14 +55,14 @@ export function JoinForm({
     >
       <div className="mb-8 text-center">
         <h1 className="font-display leading-none">
-          <span className="inline-flex text-6xl [text-shadow:3px_3px_0_var(--color-ink)] sm:text-7xl" aria-label="Guess">
+          <span className="inline-flex text-6xl [text-shadow:3px_3px_0_var(--color-ink)] sm:text-7xl" aria-label="Numino">
             {TITLE.map(({ letter, className }, index) => (
               <span key={index} className={`inline-block ${className}`} aria-hidden>
                 {letter}
               </span>
             ))}
           </span>
-          <span className="mt-1 block text-3xl text-ink sm:text-4xl">My Number</span>
+          <span className="mt-1 block text-2xl text-ink sm:text-3xl">The forehead-number game</span>
         </h1>
         <p className="mx-auto mt-4 max-w-sm text-sm font-medium text-muted">
           Everyone sees every number but their own. Ask questions, narrow it down, call it.

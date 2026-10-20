@@ -9,7 +9,7 @@ const display = Bricolage_Grotesque({
 })
 
 export const metadata: Metadata = {
-  title: 'Guess My Number',
+  title: 'Numino',
   description: 'A number on your forehead. Ask questions. Figure it out.',
 }
 

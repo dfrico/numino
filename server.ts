@@ -31,7 +31,7 @@ async function main() {
   startMetricsServer(io, metricsPort)
 
   httpServer.listen(port, host, () => {
-    console.log(`\n  guess is running\n`)
+    console.log(`\n  numino is running\n`)
     console.log(`    local   http://localhost:${port}`)
     for (const address of lanAddresses()) {
       console.log(`    network http://${address}:${port}   <- share this one`)
