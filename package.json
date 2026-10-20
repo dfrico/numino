@@ -2,6 +2,9 @@
   "name": "numino",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9"
+  },
   "scripts": {
     "dev": "tsx watch server.ts",
     "build": "next build",
