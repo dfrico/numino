@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 type Cue = 'correct' | 'solve' | 'wrong' | 'turn' | 'over'
 
@@ -30,14 +30,39 @@ const NOTES: Record<Cue, { freq: number; start: number; len: number; type: Oscil
   ],
 }
 
+function audioContextCtor(): typeof AudioContext | undefined {
+  return window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+}
+
 export function useSounds() {
   const contextRef = useRef<AudioContext | null>(null)
   const mutedRef = useRef(false)
 
+  // iOS only lets an AudioContext start from a user gesture, and the cues are
+  // triggered by socket events. Create and resume it on the first tap instead.
+  useEffect(() => {
+    const events = ['pointerdown', 'touchend', 'keydown'] as const
+    const unlock = () => {
+      for (const event of events) window.removeEventListener(event, unlock)
+      try {
+        const Ctor = audioContextCtor()
+        if (!Ctor) return
+        const ctx = (contextRef.current ??= new Ctor())
+        if (ctx.state === 'suspended') void ctx.resume()
+      } catch {
+        return
+      }
+    }
+    for (const event of events) window.addEventListener(event, unlock, { passive: true })
+    return () => {
+      for (const event of events) window.removeEventListener(event, unlock)
+    }
+  }, [])
+
   const play = useCallback((cue: Cue) => {
     if (mutedRef.current) return
     try {
-      const Ctor = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+      const Ctor = audioContextCtor()
       if (!Ctor) return
       const ctx = (contextRef.current ??= new Ctor())
       if (ctx.state === 'suspended') void ctx.resume()

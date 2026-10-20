@@ -144,6 +144,7 @@ export function dealNumber(room: Room, taken: Set<number>): number {
 }
 
 export function startGame(room: Room): { ok: true } | { ok: false; error: string } {
+  if (room.phase === 'playing') return { ok: false, error: 'A game is already running. End it first.' }
   if (room.players.size < 2) return { ok: false, error: 'You need at least 2 players.' }
   const taken = new Set<number>()
   for (const player of room.players.values()) {

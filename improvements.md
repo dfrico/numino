@@ -8,28 +8,15 @@ Things worth doing next, most valuable first. Items already done have been remov
   because `lastSolvedAt` in `RoomScreen` starts out `null`. The game-over jingle also plays
   again on every state frame after the game ends, so any disconnect or reconnect on the end
   screen retriggers it. Seed the refs from the first frame instead of reacting to it.
-- **The turn blip plays on every turn change.** The README says it plays when the turn comes
-  to *you*.
-- **Sounds probably don't play on iPhones.** `useSounds` only creates and resumes the
-  `AudioContext` from socket callbacks, never from a tap, and iOS needs a tap. Unlock it on the
-  first tap anywhere.
-- **The metrics port can crash the game server.** `startMetricsServer` has no `'error'`
-  handler, so `EADDRINUSE` on 9464 crashes the whole process.
 - **Reconnecting has no timeout.** The `room:resume` call in `RoomScreen` has no timeout, so
   the page can sit on "Opening room…" forever if the server never answers.
 - **A stray socket runs on the server.** `RoomScreen` calls `getSocket()` in a `useState`
   initialiser, which also runs during server rendering. That opens a socket.io client inside
   the Next.js process that retries `undefined//undefined` forever.
-- **`room:pass` checks the turn differently.** It checks `order[turnIndex]` instead of
-  `getTurnId`, unlike `submitGuess`.
-- **The host can redeal mid-game.** Nothing stops a direct `room:start` emit while a game is
-  running.
 - **Disconnected players linger in the lobby.** A player who disconnects in the lobby stays
   listed as "away" until they're kicked. A room with nobody connected can now be taken over
   after 2 minutes, but there's still no admin way to delete a room on demand. A
   `DELETE /rooms/<code>` on the loopback metrics server would be one option.
-- **The room preview can be wrong.** `normalizeRoomName` slices after stripping trailing
-  hyphens, so the live preview can end in `-` while the real code doesn't.
 
 ## Metrics
 

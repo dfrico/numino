@@ -4,8 +4,8 @@ export function normalizeRoomName(name: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/-{2,}/g, '-')
-    .replace(/^-|-$/g, '')
     .slice(0, 24)
+    .replace(/^-|-$/g, '')
 }
 
 export function normalizeDisplayName(name: string): string {

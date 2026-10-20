@@ -59,6 +59,10 @@ export function startMetricsServer(io: Server, port = DEFAULT_PORT): HttpServer 
     res.end(body)
   })
 
+  // A busy port must not take the game server down with it.
+  server.on('error', (error: NodeJS.ErrnoException) => {
+    console.error(`[metrics] not serving on 127.0.0.1:${port}: ${error.code ?? error.message}`)
+  })
   server.listen(port, '127.0.0.1')
   server.unref()
   return server

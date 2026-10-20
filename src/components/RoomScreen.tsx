@@ -63,7 +63,7 @@ export function RoomScreen({ code }: { code: string }) {
         play(next.lastSolved.playerId === next.you.id ? 'correct' : 'solve')
       }
       if (next.turnId !== lastTurnId.current) {
-        if (next.turnId && lastTurnId.current !== null) play('turn')
+        if (next.turnId === next.you.id && lastTurnId.current !== null) play('turn')
         lastTurnId.current = next.turnId
       }
       if (next.phase === 'finished' && next.total > 0 && next.solvedCount === next.total) {

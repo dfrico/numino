@@ -4,6 +4,7 @@ import {
   advanceTurn,
   endGame,
   findPlayerByToken,
+  getTurnId,
   isAbandoned,
   isGameOver,
   migrateHostIfAway,
@@ -281,7 +282,7 @@ export function registerSocketHandlers(io: Server): void {
       const ctx = await current(socket)
       if (!ctx) return ack({ ok: false, error: 'You are not in a room.' })
       if (ctx.room.phase !== 'playing') return ack({ ok: false, error: 'The game is not running.' })
-      if (ctx.room.order[ctx.room.turnIndex] !== ctx.playerId) {
+      if (getTurnId(ctx.room) !== ctx.playerId) {
         return ack({ ok: false, error: 'It is not your turn.' })
       }
 
